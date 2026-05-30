@@ -43,7 +43,7 @@ namespace SPSC {
         } else {
 
         }
-        T elem = data_[front_];
+        T elem = data_[front];
         std::atomic_store_explicit(front_, (front + 1) % N, std::memory_order_seq_cst);
         return elem;
     }
