@@ -25,3 +25,21 @@ We can see a significant perf increase from not paying the mutex overhead.
 My curiosity asked my the RingBuffer impl wasn't a significant performance increase over the original LamportQueue,
 this lead me to find the existence of MFENCE. This is an expensive operation to pay normally that results from seq_cst on x86.
 std::memory_order_seq_cst uses `ldar` and `stlr` on ARM to avoid this.
+
+
+# Benchmark with alignas(64)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x10)
+Load Average: 3.29, 3.91, 3.90
+------------------------------------------------------------------------------------------
+Benchmark                                                Time             CPU   Iterations
+------------------------------------------------------------------------------------------
+BM_Queue_Spec<Mutex::MutexQueue<int, 1024>>         830879 ns       656196 ns         1070
+BM_Queue_Spec<Lamport::LamportQueue<int, 1024>>     480804 ns       456452 ns         1488
+BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          438413 ns       415397 ns         1628
+
+
+## Observations
+When using alignas(64) for `front_` and `back_` we can we another small bump in performance because we are avoiding bad cache evictions due to false sharing
