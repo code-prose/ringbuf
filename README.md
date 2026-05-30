@@ -7,10 +7,10 @@
 
 
 ## Benchmarking
-CPU Caches:
-  L1 Data 64 KiB
-  L1 Instruction 128 KiB
-  L2 Unified 4096 KiB (x10)
+#### CPU Caches:
+- L1 Data 64 KiB
+- L1 Instruction 128 KiB
+- L2 Unified 4096 KiB (x10)
 Load Average: 1.95, 2.96, 3.74
 ------------------------------------------------------------------------------------------
 Benchmark                                                Time             CPU   Iterations
@@ -28,10 +28,10 @@ std::memory_order_seq_cst uses `ldar` and `stlr` on ARM to avoid this.
 
 
 ### Benchmark with alignas(64)
-CPU Caches:
-  L1 Data 64 KiB
-  L1 Instruction 128 KiB
-  L2 Unified 4096 KiB (x10)
+#### CPU Caches:
+- L1 Data 64 KiB
+- L1 Instruction 128 KiB
+- L2 Unified 4096 KiB (x10)
 Load Average: 3.29, 3.91, 3.90
 ------------------------------------------------------------------------------------------
 Benchmark                                                Time             CPU   Iterations
@@ -46,10 +46,10 @@ When using alignas(64) for `front_` and `back_` we can we another small bump in 
 
 
 ### Benchmark with alignas(128)
-CPU Caches:
-  L1 Data 64 KiB
-  L1 Instruction 128 KiB
-  L2 Unified 4096 KiB (x10)
+#### CPU Caches:
+- L1 Data 64 KiB
+- L1 Instruction 128 KiB
+- L2 Unified 4096 KiB (x10)
 Load Average: 3.54, 3.54, 3.73
 ------------------------------------------------------------------------------------------
 Benchmark                                                Time             CPU   Iterations
