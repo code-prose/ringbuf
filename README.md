@@ -26,9 +26,6 @@ this lead me to find the existence of MFENCE. This is an expensive operation to 
 std::memory_order_seq_cst uses `ldar` and `stlr` on ARM to avoid this.
 
 ------------------------------------------------------------------------------------------
-
-
-------------------------------------------------------------------------------------------
 ### Benchmark with alignas(64)
 #### CPU Caches:
 - L1 Data 64 KiB
@@ -45,9 +42,6 @@ BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          438413 ns       415397 ns   
 When using alignas(64) for `front_` and `back_` we can we another small bump in performance because we are avoiding bad cache evictions due to false sharing
 
 ------------------------------------------------------------------------------------------
-
-
-------------------------------------------------------------------------------------------
 ### Benchmark with alignas(128)
 #### CPU Caches:
 - L1 Data 64 KiB
@@ -62,5 +56,20 @@ BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          446212 ns       421031 ns   
 
 ### Observations
 Dealing with more cache interference as we over-align the data
+
+------------------------------------------------------------------------------------------
+### Benchmarking with caught perf bug
+#### CPU Caches:
+- L1 Data 64 KiB
+- L1 Instruction 128 KiB
+- L2 Unified 4096 KiB (x10)
+Load Average: 6.05, 6.21, 4.67
+#### Benchmark                                                Time             CPU   Iterations
+BM_Queue_Spec<Mutex::MutexQueue<int, 1024>>         852613 ns       675046 ns         1031
+BM_Queue_Spec<Lamport::LamportQueue<int, 1024>>     434657 ns       411425 ns         1594
+BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          289411 ns       266086 ns         2534
+
+### Observations
+I was still utilizing the load even with the cached approach. These results seem much better.
 
 ------------------------------------------------------------------------------------------

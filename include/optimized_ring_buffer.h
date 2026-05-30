@@ -23,7 +23,6 @@ namespace SPSC {
         std::size_t back, front;
 
         back = std::atomic_load_explicit(&back_, std::memory_order_relaxed);
-        front = std::atomic_load_explicit(&front_, std::memory_order_acquire); 
         front = cached_front_;
         if ((back + 1) % N == front) {
             cached_front_ = front = std::atomic_load_explicit(&front_, std::memory_order_acquire);
@@ -43,7 +42,6 @@ namespace SPSC {
     std::optional<T> RingBuffer<T, N>::pop() {
         std::size_t back, front;
         front = std::atomic_load_explicit(&front_, std::memory_order_relaxed);
-        back = std::atomic_load_explicit(&back_, std::memory_order_acquire);
         back = cached_back_;
         if (back == front) {
            cached_back_ = back = std::atomic_load_explicit(&back_, std::memory_order_acquire); 
