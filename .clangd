@@ -1,2 +1,8 @@
 CompileFlags:
-  Add: [-std=c++23, -Iinclude]
+  Add: [-std=c++23, -Iinclude, -Wall, -Wextra]
+If:
+  PathMatch: [src/, include/]
+ClangTidy:
+  Add: 
+    - cppcoreguidelines-narrowing-conversions
+    - bugprone-narrowing-conversions
