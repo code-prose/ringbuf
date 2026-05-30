@@ -8,7 +8,7 @@ int main() {
     queue.push(2);
     queue.push(1);
     if (auto val = queue.pop()) {
-        std::printf("{}", *val);
+        std::print("{}", *val);
     }
     return 0;
 }

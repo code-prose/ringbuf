@@ -12,7 +12,6 @@ endif()
 
 add_executable(spsc_ring_buffer
     src/main.cpp
-    src/lamport_queue.cpp
 )
 
 target_include_directories(spsc_ring_buffer PRIVATE include)
