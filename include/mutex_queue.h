@@ -1,4 +1,4 @@
-#include <atomic>
+#pragma once
 #include <mutex>
 #include <optional>
 

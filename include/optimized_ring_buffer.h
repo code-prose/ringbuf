@@ -1,3 +1,4 @@
+#pragma once
 #include <atomic>
 #include <optional>
 
@@ -12,6 +13,8 @@ namespace SPSC {
     private:
         std::atomic_size_t front_{0};
         std::atomic_size_t back_{0};
+        std::size_t cached_front_{0};
+        std::size_t cached_back_{0};
         T data_[N];
     };
 
