@@ -12,10 +12,10 @@ namespace SPSC {
         std::optional<T> pop();
     private:
         alignas(64) std::atomic_size_t front_{0};
+        alignas(64) std::size_t cached_back_{0};
         alignas(64) std::atomic_size_t back_{0};
-        std::size_t cached_front_{0};
-        std::size_t cached_back_{0};
-        T data_[N];
+        alignas(64) std::size_t cached_front_{0};
+        alignas(64) T data_[N];
     };
 
     template <typename T, std::size_t N>

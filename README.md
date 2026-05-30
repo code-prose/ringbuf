@@ -73,3 +73,18 @@ BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          289411 ns       266086 ns   
 I was still utilizing the load even with the cached approach. These results seem much better.
 
 ------------------------------------------------------------------------------------------
+### Benchmarking with different struct layout to avoid even more false sharing for caches
+#### CPU Caches:
+- L1 Data 64 KiB
+- L1 Instruction 128 KiB
+- L2 Unified 4096 KiB (x10)
+Load Average: 2.43, 3.64, 3.93
+Benchmark                                                Time             CPU   Iterations
+BM_Queue_Spec<Mutex::MutexQueue<int, 1024>>         815541 ns       648445 ns         1104
+BM_Queue_Spec<Lamport::LamportQueue<int, 1024>>     434403 ns       410872 ns         1622
+BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          287744 ns       264178 ns         2549
+
+### Observations
+We get another speedup here with everything aligned... But we keep paying steeper and steeper memory costs
+
+------------------------------------------------------------------------------------------
