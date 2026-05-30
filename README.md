@@ -6,7 +6,7 @@
 1. [Blog post exploring these papers](https://rlc.vlinder.ca/blog/2015/11/06/interesting-modifications-to-the-lamport-queue)
 
 
-# Benchmarking
+## Benchmarking
 CPU Caches:
   L1 Data 64 KiB
   L1 Instruction 128 KiB
@@ -27,7 +27,7 @@ this lead me to find the existence of MFENCE. This is an expensive operation to 
 std::memory_order_seq_cst uses `ldar` and `stlr` on ARM to avoid this.
 
 
-# Benchmark with alignas(64)
+### Benchmark with alignas(64)
 CPU Caches:
   L1 Data 64 KiB
   L1 Instruction 128 KiB
@@ -41,11 +41,11 @@ BM_Queue_Spec<Lamport::LamportQueue<int, 1024>>     480804 ns       456452 ns   
 BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          438413 ns       415397 ns         1628
 
 
-## Observations
+### Observations
 When using alignas(64) for `front_` and `back_` we can we another small bump in performance because we are avoiding bad cache evictions due to false sharing
 
 
-# Benchmark with alignas(128)
+### Benchmark with alignas(128)
 CPU Caches:
   L1 Data 64 KiB
   L1 Instruction 128 KiB
@@ -59,5 +59,5 @@ BM_Queue_Spec<Lamport::LamportQueue<int, 1024>>     536653 ns       513953 ns   
 BM_Queue_Spec<SPSC::RingBuffer<int, 1024>>          446212 ns       421031 ns         1589
 
 
-## Observations
+### Observations
 Dealing with more cache interference as we over-align the data
